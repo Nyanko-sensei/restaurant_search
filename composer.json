@@ -1,0 +1,17 @@
+{
+    "name": "nyanko-sensei/restaurant_search",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "authors": [
+        {
+            "name": "Gediminas Rasdzevicius",
+            "email": "radzeviciusgediminas@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {"RestaurantSearch\\": "src/"}
+    }
+}
