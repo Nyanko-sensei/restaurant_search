@@ -78,7 +78,7 @@ class DependencyInjectionContainer implements DependencyContainer
      * @return array
      * @throws Exception
      */
-    public function getDependencies($parameters,  $params)
+    public function getDependencies($parameters,  $params = [])
     {
         $dependencies = [];
         foreach ($parameters as $parameter) {
