@@ -8,9 +8,17 @@ use RestaurantSearch\Interfaces\DestinationCalculator;
 class MathematicalDistanceCalculator implements DestinationCalculator
 {
     const EARTH_RADIUS = 6371000;
+
     /**
      * Math copied from
      * https://stackoverflow.com/questions/10053358/measuring-the-distance-between-two-coordinates-in-php
+     *
+     * @param float $lat1
+     * @param float $long1
+     * @param float $lat2
+     * @param float $long2
+     *
+     * @return float
      */
     public function getDistance(float $lat1, float $long1, float $lat2, float $long2)
     {
@@ -22,8 +30,7 @@ class MathematicalDistanceCalculator implements DestinationCalculator
         $latDelta = $latTo - $latFrom;
         $lonDelta = $lonTo - $lonFrom;
 
-        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
-                cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+        $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
 
         return $angle * self::EARTH_RADIUS;
     }

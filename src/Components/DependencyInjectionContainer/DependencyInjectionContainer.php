@@ -7,23 +7,26 @@ use Exception;
 use ReflectionClass;
 use RestaurantSearch\Interfaces\DependencyContainer;
 
+/** Copied from and modified from https://medium.com/tech-tajawal/dependency-injection-di-container-in-php-a7e5d309ccc6 */
 class DependencyInjectionContainer implements DependencyContainer
 {
     /**
      * @var array
      */
     protected $instances = [];
+
     /**
      * @param      $abstract
      * @param null $concrete
      */
-    public function set($abstract, $concrete = NULL)
+    public function set($abstract, $concrete = null)
     {
-        if ($concrete === NULL) {
+        if ($concrete === null) {
             $concrete = $abstract;
         }
         $this->instances[$abstract] = $concrete;
     }
+
     /**
      * @param       $abstract
      * @param array $parameters
@@ -34,11 +37,13 @@ class DependencyInjectionContainer implements DependencyContainer
     public function get($abstract, $parameters = [])
     {
         // if we don't have it, just register it
-        if (!isset($this->instances[$abstract])) {
+        if (! isset($this->instances[$abstract])) {
             $this->set($abstract);
         }
+
         return $this->resolve($this->instances[$abstract], $parameters);
     }
+
     /**
      * resolve single
      *
@@ -55,7 +60,7 @@ class DependencyInjectionContainer implements DependencyContainer
         }
         $reflector = new ReflectionClass($concrete);
         // check if class is instantiable
-        if (!$reflector->isInstantiable()) {
+        if (! $reflector->isInstantiable()) {
             throw new Exception("Class {$concrete} is not instantiable");
         }
         // get class constructor
@@ -65,11 +70,13 @@ class DependencyInjectionContainer implements DependencyContainer
             return $reflector->newInstance();
         }
         // get constructor params
-        $parameters   = $constructor->getParameters();
+        $parameters = $constructor->getParameters();
         $dependencies = $this->getDependencies($parameters);
+
         // get new instance with dependencies resolved
         return $reflector->newInstanceArgs($dependencies);
     }
+
     /**
      * get all dependencies resolved
      *
@@ -78,13 +85,13 @@ class DependencyInjectionContainer implements DependencyContainer
      * @return array
      * @throws Exception
      */
-    public function getDependencies($parameters,  $params = [])
+    public function getDependencies($parameters, $params = [])
     {
         $dependencies = [];
         foreach ($parameters as $parameter) {
             // get the type hinted class
             $dependency = $parameter->getClass();
-            if ($dependency === NULL) {
+            if ($dependency === null) {
                 // check if default value for a parameter is available
                 if (isset($params[$parameter->getName()])) {
                     $dependencies[] = $params[$parameter->getName()];
@@ -99,7 +106,7 @@ class DependencyInjectionContainer implements DependencyContainer
                 $dependencies[] = $this->get($dependency->name);
             }
         }
+
         return $dependencies;
     }
-
 }

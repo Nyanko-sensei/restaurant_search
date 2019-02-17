@@ -14,7 +14,8 @@ use RestaurantSearch\Models\Restaurant;
 
 class RestaurantLoaderFromJson implements RestaurantsLoader
 {
-    const PATH = __DIR__.'/../../../data/backend-data.json';
+    const PATH = __DIR__ . '/../../../data/backend-data.json';
+
     /***
      * @param null $path
      *
@@ -22,8 +23,8 @@ class RestaurantLoaderFromJson implements RestaurantsLoader
      */
     public function load($path = null): array
     {
-        if(empty($path)) {
-            $path  = self::PATH;
+        if (empty($path)) {
+            $path = self::PATH;
         }
 
         $restaurants = [];
@@ -32,14 +33,14 @@ class RestaurantLoaderFromJson implements RestaurantsLoader
             $restaurantsData = json_decode($string, true);
 
             foreach ($restaurantsData as $restaurantData) {
-                $restaurants[]  = $this->processJsonEntry($restaurantData);
+                $restaurants[] = $this->processJsonEntry($restaurantData);
             }
         }
 
         return $restaurants;
     }
 
-    private function processJsonEntry($restaurantData):Restaurant
+    private function processJsonEntry($restaurantData): Restaurant
     {
         $restaurant = new Restaurant();
 

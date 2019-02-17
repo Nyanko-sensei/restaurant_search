@@ -9,15 +9,15 @@ use RestaurantSearch\Models\Restaurant;
 
 class RestaurantsRepository implements RestaurantsRepositoryInterface
 {
-    /** @var Restaurant[]  */
+    /** @var Restaurant[] */
     private $restaurants = [];
-    /** @var DestinationCalculator  */
+    /** @var DestinationCalculator */
     private $destinationCalculator;
 
     public function __construct(RestaurantsLoader $restaurantsLoader, DestinationCalculator $destinationCalculator)
     {
         $this->restaurants = $restaurantsLoader->load();
-        $this->destinationCalculator =  $destinationCalculator;
+        $this->destinationCalculator = $destinationCalculator;
     }
 
     /**
@@ -65,7 +65,7 @@ class RestaurantsRepository implements RestaurantsRepositoryInterface
         }
 
         if (! empty($filters['free_text'])
-            &&strpos($restaurant->getClientKey(), $filters['free_text']) === false
+            && strpos($restaurant->getClientKey(), $filters['free_text']) === false
             && strpos($restaurant->getRestaurantName(), $filters['free_text']) === false
             && strpos($restaurant->getCuisine(), $filters['free_text']) === false
             && strpos($restaurant->getCity(), $filters['free_text']) === false

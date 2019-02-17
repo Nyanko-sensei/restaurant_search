@@ -11,5 +11,5 @@ interface RestaurantsLoader
      *
      * @return Restaurant[];
      */
-    public function load($path = null):array ;
+    public function load($path = null): array;
 }

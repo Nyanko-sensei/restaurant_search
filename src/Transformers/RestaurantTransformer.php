@@ -23,7 +23,7 @@ class RestaurantTransformer
     {
         $transformedRestaurants = [];
 
-        foreach ($restaurants  as $restaurant) {
+        foreach ($restaurants as $restaurant) {
             $transformedRestaurants[] = self::transform($restaurant);
         }
 

@@ -6,7 +6,7 @@ use RestaurantSearch\Interfaces\DependencyContainer;
 
 class Router
 {
-    /** @var DependencyContainer  */
+    /** @var DependencyContainer */
     private $dependencyContainer;
     private $routes = [];
     private $currentRoute;
@@ -29,18 +29,18 @@ class Router
         $this->requestUri = $_SERVER['REDIRECT_URL'];
 
 
-        foreach ($this->routes as $route => $routInfo)  {
+        foreach ($this->routes as $route => $routInfo) {
 
             if (preg_match($this->prepareRoute($route), $this->requestUri, $matches)) {
-               $this->currentRoute = $route;
+                $this->currentRoute = $route;
             }
         }
 
-        if (!$this->currentRoute) {
+        if (! $this->currentRoute) {
             throw new RouteNotFoundException('route not found');
         }
 
-        if (!isset($this->routes[$this->currentRoute][$this->requestMethod])) {
+        if (! isset($this->routes[$this->currentRoute][$this->requestMethod])) {
             throw new MethodNotAllowedException('method not allowed');
         }
 
@@ -48,12 +48,12 @@ class Router
 
         $handler = explode('@', $this->routes[$this->currentRoute][$this->requestMethod]);
 
-        $className = "RestaurantSearch\\Controllers\\".$handler[1];
+        $className = "RestaurantSearch\\Controllers\\" . $handler[1];
         $method = $handler[0];
 
         $controller = $this->dependencyContainer->get($className);
 
-        if(!(method_exists($controller, $method))) {
+        if (! (method_exists($controller, $method))) {
             throw new InvalidMethodException();
         }
 
@@ -67,19 +67,19 @@ class Router
 
     private function prepareRoute($route)
     {
-        return '/^'.preg_replace(['/\{.*?\}/','/\//'], ['(.*)','\/'],$route).'$/';
+        return '/^' . preg_replace(['/\{.*?\}/', '/\//'], ['(.*)', '\/'], $route) . '$/';
     }
 
     private function getVariables()
     {
         $variables = [];
 
-        if (preg_match_all('/\{(.*?)\}/',$this->currentRoute, $names)){
+        if (preg_match_all('/\{(.*?)\}/', $this->currentRoute, $names)) {
             $names = $names[1];
             preg_match($this->prepareRoute($this->currentRoute), $this->requestUri, $matches);
-            foreach($matches  as $key => $match) {
-                if(isset($names[$key-1])) {
-                    $variables[$names[$key-1]] = $match;
+            foreach ($matches as $key => $match) {
+                if (isset($names[$key - 1])) {
+                    $variables[$names[$key - 1]] = $match;
                 }
             }
         }
