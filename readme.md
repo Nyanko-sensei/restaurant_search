@@ -12,7 +12,7 @@ Write an API in PHP that handles a request to search for relevant restaurants ba
    * Distance from me
    * Free text
   
-###Goal
+### Goal
 While the task itself should be easy to solve, the goal of this task is to show us how you
 structure your code, what principles do you use, what kind of strategy that has driven your
 development.
