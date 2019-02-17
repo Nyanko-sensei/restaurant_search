@@ -18,3 +18,8 @@ $dependencyInjectionContainer->set(
     RestaurantSearch\Interfaces\Response::class,
     RestaurantSearch\Components\Response\JsonResponse::class
 );
+
+$dependencyInjectionContainer->set(
+    RestaurantSearch\Interfaces\DestinationCalculator::class,
+    RestaurantSearch\Components\MathematicalDistanceCalculator\MathematicalDistanceCalculator::class
+);
